@@ -32,7 +32,7 @@ def normalize(images):
     
     return nvimages
 
-def binary_merge(bkg_img, item,img_result,last_black_pixl_x):
+def binary_merge(bkg_img, item,img_result):
     _images = normalize([bkg_img,item[0],item[1],img_result])
     bkg_pixels = _images[0].load()
     img_pixels = _images[1].load()
@@ -48,17 +48,15 @@ def binary_merge(bkg_img, item,img_result,last_black_pixl_x):
             
             if mask_img[x,y] == (0,0,0):
                 img_result_pixels[x,y] = (r2,g2,b2)
-                last_black_pixl_x = x
             else:
-                img_result_pixels[x,y] = (r1,g1,b1)
+               pass# img_result_pixels[x,y] = (r1,g1,b1)
        
 
 background = Image.open("background.png")
 images = readImages_and_masks(4)
 
-img_result = Image.new("RGB",(background.size[0], background.size[1]) )
-last_black_pixl_x = 0
-for item in images[0:10]:
-    binary_merge(background, item,img_result,last_black_pixl_x)
+img_result = background#Image.new("RGB",(background.size[0], background.size[1]) )
+for item in images:
+    binary_merge(background, item,img_result)
 
 img_result.show()
