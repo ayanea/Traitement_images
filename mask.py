@@ -44,7 +44,7 @@ def create_image(color):
     return img
    
 
-def get_mask(bkg_img, img,img_result):
+def get_mask_old(bkg_img, img,img_result):
    
     _images = normalize([bkg_img, img,img_result])
     bkg_pixels  = _images[0].load()
@@ -62,7 +62,7 @@ def get_mask(bkg_img, img,img_result):
               img_result_pixels[x,y] = (0,0,0)
    
 
-def get_mask2(bkg_img, img):
+def get_mask(bkg_img, img):
    
     mask_image  =  create_image((255,255,255))
     _images = normalize([bkg_img, img,mask_image])
@@ -86,12 +86,14 @@ def get_mask2(bkg_img, img):
 
 background = Image.open("background.png")
 images = readImages(4)
-img_result  =  create_image((255,255,255))
+
 for im in images:
-    get_mask(background, im,img_result)
-       
-img_result.save('mask.png')
-img_result.show()
+    mask = get_mask(background, im)
+    fileparts  = im.filename.split('.')
+    maskFileName = fileparts[0] + '_mask.' + fileparts[1]
+    print(maskFileName)
+    mask.save(maskFileName)
+
 
 # result = get_mask(background,images[0]) 
 # result.show()
