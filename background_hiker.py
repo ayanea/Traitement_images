@@ -2,11 +2,6 @@ from PIL import Image, ImageFilter
 import time
 from util import readImages
 
-# for img in image2:
-#     parts = img.split('.')
-#     if parts[1].lower() == 'png' : images.append(img)
-
-
 def median_images(images):
     #mettre du code ici
     #les images sont en RGB

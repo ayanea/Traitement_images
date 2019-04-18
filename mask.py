@@ -1,9 +1,10 @@
 from PIL import Image, ImageFilter
-from util import readImages
+from util import readImages,readImages2
 MASK_TRESHOLD = 50
 
 background = Image.open("background.png")
-images = readImages()
+images = readImages2(4)
+
 
 def normalize(images):
     minW = images[0].size[0]
@@ -36,73 +37,50 @@ def normalize(images):
     
     return nvimages
 
+def create_image(color):
+    img = Image.new("RGB",(background.size[0], background.size[1]) )
+    pixels = img.load()
+    width = img.size[0]
+    height = img.size[1]
+    for x in range(width):
+        for y in range(height):
+            pixels[x,y] = color
+    return img
+   
 
-def mask(images):
-    images_pixels = []
-    mask = []
-    for img in images_normalized:
-        images_pixels.append(img.load())
-        mask = diff(images_pixels[i]-background)
-
-    return mask
-
-
-def get_mask(image1, image2):
-    _images = [image1,image2]#normalize((image1,image2))
-    pixel1 = _images[0].load()
-    pixel2 = _images[1].load()
+def get_mask(bkg_img, img,img_result):
+   
+    _images = normalize([bkg_img, img,img_result])
+    bkg_pixels  = _images[0].load()
+    img_pixels  = _images[1].load()
+    img_result_pixels = _images[2].load()
+    width = _images[0].size[0]
+    height = _images[0].size[1]
     
-    new_img = Image.new("RGB",(_images[0].size[0], _images[0].size[1]) )
-    new_pixels = new_img.load()
-    print( pixel1[707,542])
-    print( pixel2[707,542])
-    for x in range(_images[0].size[0]):
-        for y in range(_images[0].size[1]):
-            r1,g1,b1 = pixel1[x,y]
-            r2,g2,b2 = pixel2[x,y]
-            if abs(r1-r2) < MASK_TRESHOLD or abs(g1-g2) < MASK_TRESHOLD or abs(b1-b2) < MASK_TRESHOLD :
-               new_pixels[x,y] = (255,255,255)
-            else:
-               
-                new_pixels[x,y] = (0,0,0)
-    return new_img
+    for x in range(width):
+        for y in range(height):
+            r1,g1,b1 = bkg_pixels[x,y]
+            r2,g2,b2 = img_pixels[x,y]
+            is_background = abs(r1-r2) < MASK_TRESHOLD and abs(g1-g2) < MASK_TRESHOLD and abs(b1-b2) < MASK_TRESHOLD 
+            if not is_background:
+              img_result_pixels[x,y] = (0,0,0)
+   
+
+# def get_masks2(count):
+#     nrmImages = normalize(images)
+#     masks = []
+#     for im in nrmImages[0:count]:
+#         masks.append(diff(background,im))
+#     return masks
+
+ 
+img_result  =  create_image((255,255,255))
+for im in images:
+    get_mask(background, im,img_result)
+
+img_result.show()
+# result = get_mask(background,images[0]) 
+# result.show()
 
 
-def add(image1, image2):
-    
-    images = normalize((image1,image2))
-    pixel1 = images[0].load()
-    pixel2 = images[1].load()
-    
-    new_img = Image.new("RGB",(images[0].size[0], images[0].size[1]) )
-    new_pixels = new_img.load()
-    
-    for x in range(images[0].size[0]):
-        for y in range(images[0].size[1]):
-            r1,g1,b1 = pixel1[x,y]
-            r2,g2,b2 = pixel2[x,y]
-            new_pixels[x,y] =  (r1+r2,g1+g2,b1+b2)
-       
-      
-    return new_img
-
-def get_masks2(count):
-    nrmImages = normalize(images)
-    masks = []
-    for im in nrmImages[0:count]:
-        masks.append(diff(background,im))
-    return masks
-
-
-# masks = get_masks(1)
-# result = background
-# #for mask in masks:
-#  #   result = add(mask,result) 
-
-result = get_mask(background,images[0]) 
-print(images[0].size)
-print(background.size)
-print(result.size)
-result.show()
-
-
+ 
