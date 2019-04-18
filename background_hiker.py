@@ -3,8 +3,6 @@ import time
 from util import readImages
 
 def median_images(images):
-    #mettre du code ici
-    #les images sont en RGB
     images_normalized = normalize(images)
     img_dest = Image.new("RGB", images[0].size)
     dest = img_dest.load()
@@ -69,10 +67,9 @@ def normalize(images):
     return nvimages
 
 
-start_time = time.time()
-#img_normalize = normalize(images)
-images =  readImages()
+#start_time = time.time()
+images =  readImages(1)
 background = median_images(images)
 background.save("background.png")
-duree = time.time() - start_time
-print("Duree: ",duree)
+#duree = time.time() - start_time
+#print("Duree: ",duree)
