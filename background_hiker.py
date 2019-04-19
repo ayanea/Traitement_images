@@ -1,6 +1,6 @@
 from PIL import Image, ImageFilter
 import time
-from util import readImages
+from util import readImages,normalize
 
 def median_images(images):
     images_normalized = normalize(images)
@@ -31,42 +31,6 @@ def median_images(images):
     return img_dest	
 
    
-
-def normalize(images):
-    minW = images[0].size[0]
-    minH = images[0].size[1]
-    maxW = images[0].size[0]
-    maxH = images[0].size[1] #on initialise les variables min et max aux dimensions 
-    #de la premiere image pour la comparer avec les suivantes
-
-        
-    for i in images:
-        nvimages = []
-        hauteur = []
-        largeur = []
-        hauteur.append(i.size[1])
-        largeur.append(i.size[0]) #pas obligatoire de faire un tableau pour hauteur et largeur (inutile?!)
-
-
-        if(hauteur[0] <= minH ):
-            minH = hauteur[0]
-        elif (hauteur[0] >= maxH):
-            maxH = hauteur[0]
-                
-        if (largeur[0] <= minW):
-            minW = largeur[0]
-        elif (largeur[0] >= maxW) :
-            maxW = largeur[0]
-            
-    if (minW == maxW and minH == maxH):
-        return images
-    
-    for i in images:
-        nvimages.append(crop(i, 0, 0, minH, minW))
-    
-    return nvimages
-
-
 #start_time = time.time()
 images =  readImages(1)
 background = median_images(images)
