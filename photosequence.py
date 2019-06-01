@@ -23,7 +23,7 @@ def binary_merge(bkg_img, item,img_result):
 background = Image.open("background.png")
 images = readImages_and_masks(4)
 
-img_result = background#Image.new("RGB",(background.size[0], background.size[1]) )
+img_result = background
 for item in images:
     binary_merge(background, item,img_result)
 

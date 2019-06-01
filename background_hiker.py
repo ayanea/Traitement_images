@@ -23,7 +23,7 @@ def median_images(images):
                 gp.append(g1)           #valeurs verte de chaque img
                 bp.append(b1)           #valeurs bleu de chaque img
             
-            rp.sort()                   #trie des listes
+            rp.sort()                   #tri des listes
             gp.sort()
             bp.sort()
             dest[x,y] = rp[N//2],gp[N//2],bp[N//2]     #la valeur med de chaque couleur

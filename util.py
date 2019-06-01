@@ -2,23 +2,21 @@ import os
 from PIL import Image, ImageFilter
 
 
-
-
-def readImages(nb):
+def readImages(nb): #permet de recuperer les images tous les nb fois 
     path = r"images\monsieur"
     images = []
     tmp = os.listdir(path)  
     cpt = 0
     for img_name in tmp:
-        if img_name.lower().find('_mask') != -1: continue
-        if img_name.lower().find('png') != -1 and cpt%nb == 0  : 
+        if img_name.lower().find('_mask') != -1: continue  
+        if img_name.lower().find('png') != -1 and cpt%nb == 0  : #si le nom du fichier contient le mot png 
             img =  Image.open(path + '/' + img_name )
             images.append(img)
         cpt += 1
 
     return images 
 
-def readImages_and_masks(nb):
+def readImages_and_masks(nb):  #permet de recuperer les images et les masks tous les nb fois
     path = r"images\monsieur"
     images = []
     tmp = os.listdir(path)  
@@ -36,7 +34,7 @@ def readImages_and_masks(nb):
     return images 
 
 
-def normalize(images):
+def normalize(images): #permet de mettre les images a la meme taille
     minW = images[0].size[0]
     minH = images[0].size[1]
     maxW = images[0].size[0]
