@@ -77,7 +77,7 @@ def extract_frames_from_video(path_video):
     if not os.path.exists('tmp/'):
         os.mkdir('tmp')
 
-    tmp_folder = "tmp/" + os.path.splitext(os.path.basename(path_video))[0]
+    tmp_folder = os.path.join("tmp",os.path.splitext(os.path.basename(path_video))[0])
 
     if not os.path.exists(tmp_folder):
         os.mkdir(tmp_folder)

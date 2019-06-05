@@ -40,7 +40,9 @@ def median_images(images):
 
    
 def get_background_and_save(path_dir):
+    print(os.path.join(os.getcwd(),path_dir, "background.png"))
     if not os.path.isfile(os.path.join(path_dir, "background.png")):
+        print('background file not found')
         images =  readImages(1, path_dir)
         background = median_images(images)
         background.save(os.path.join(path_dir, "background.png"))

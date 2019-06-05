@@ -7,7 +7,6 @@ def fading(img,transparency):
     
     alpha =  (255*transparency)//100
     img_source =  img.copy()
-    img_source = img_source.convert("RGBA")
     pixels_source = img_source.load()
     img_dest = Image.new("RGBA", img_source.size)
     pixels_destination = img_dest.load()
@@ -16,7 +15,7 @@ def fading(img,transparency):
 
     for x in range (width):
         for y in range (height):
-            r1,g1,b1,a1 = pixels_source[x,y]
+            r1,g1,b1 = pixels_source[x,y]
             pixels_destination[x,y] = r1,g1,b1,alpha
 
 
@@ -26,7 +25,7 @@ def fading(img,transparency):
 
 
 img = Image.open('jaguar.png')
-image = fading(img,50)
+image = fading(img,80)
 image.save("jaguar_fading.png", "PNG")
 
 
