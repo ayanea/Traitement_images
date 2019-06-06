@@ -49,9 +49,9 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
     N = len(images)
     printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
     cpt = 0
-    ratio = 100//N 
+    ratio = 100//N
     for i in range(0,N):
-        binary_merge(item, img_result,ratio*i + 1))
+        binary_merge(images[i], img_result,ratio*i + 1)
         cpt += 1
         printProgressBar(cpt, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
