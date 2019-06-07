@@ -5,30 +5,12 @@ from lib.mask import get_mask_and_save
 import os
 import argparse
 
-def fading(img,transparency):
-    
-    alpha =  (255*transparency)//100
-    img_source =  img.copy()
-    pixels_source = img_source.load()
-    img_dest = Image.new("RGBA", img_source.size)
-    pixels_destination = img_dest.load()
-    width = img_source.size[0]
-    height = img_source.size[1]
-
-    for x in range (width):
-        for y in range (height):
-            r1,g1,b1 = pixels_source[x,y]
-            pixels_destination[x,y] = r1,g1,b1,alpha
-
-
-    return img_dest
 
 def mix_alpha(v1,v2, alpha):
     return int((v1*alpha+v2*(100-alpha))/100)
 
 
 def binary_merge(item,img_result,transparency):
-    #img = fading(item[0],transparency)
     _images = normalize([item[0],item[1],img_result])
     img_pixels = _images[0].load()
     mask_img = _images[1].load()
@@ -48,7 +30,7 @@ def binary_merge(item,img_result,transparency):
        
 def photosequence(frame_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
-    img_result = background.convert('RGB')
+    img_result = background
     
     print("----------------------  DEBUT DE LA SAUVEGARDE DE L'IMAGE FINALE 4/4 ------------------------------------------")
     N = len(images)
