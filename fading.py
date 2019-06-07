@@ -25,7 +25,7 @@ def fading(img,transparency):
 
 
 img = Image.open('jaguar.png')
-image = fading(img,80)
+image = fading(img,50)
 image.save("jaguar_fading.png", "PNG")
 
 

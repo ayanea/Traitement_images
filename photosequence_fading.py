@@ -23,10 +23,13 @@ def fading(img,transparency):
 
     return img_dest
 
+def mix_alpha(v1,v2, alpha):
+    return int((v1*alpha+v2*(100-alpha))/100)
+
+
 def binary_merge(item,img_result,transparency):
-    img = fading(item[0],transparency)
-    _images = normalize([img,item[1],img_result])
-    #bkg_pixels = _images[0].load()
+    #img = fading(item[0],transparency)
+    _images = normalize([item[0],item[1],img_result])
     img_pixels = _images[0].load()
     mask_img = _images[1].load()
     width = _images[0].size[0]
@@ -35,15 +38,17 @@ def binary_merge(item,img_result,transparency):
     
     for x in range(width):
         for y in range(height):
-           # r1,g1,b1 = bkg_pixels[x,y]
-            r2,g2,b2,a2 = img_pixels[x,y]
-            
-            if mask_img[x,y] == (0,0,0):
-                img_result_pixels[x,y] = (r2,g2,b2,a2)
+            if mask_img[x,y] == (0,0,0):        
+                r1,g1,b1 = img_pixels[x,y]
+                r2,g2,b2 = img_result_pixels[x,y]
+                r = mix_alpha(r1,r2, transparency)
+                g = mix_alpha(g1,g2, transparency)
+                b = mix_alpha(b1,b2, transparency)
+                img_result_pixels[x,y] = (r,g,b)
        
 def photosequence(frame_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
-    img_result = background.convert('RGBA')
+    img_result = background.convert('RGB')
     
     print("----------------------  DEBUT DE LA SAUVEGARDE DE L'IMAGE FINALE 4/4 ------------------------------------------")
     N = len(images)
@@ -55,7 +60,7 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
         cpt += 1
         printProgressBar(cpt, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
-    img_result.save("photosequence_fading2" + os.path.splitext(os.path.basename(path_video))[0] + ".png")
+    img_result.save("photosequence_fading_" + os.path.splitext(os.path.basename(path_video))[0] + ".png")
     print("---------------------- IMAGE SAUVEGARDEE !  ------------------------------------------")
     print()
 
