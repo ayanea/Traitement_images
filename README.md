@@ -8,8 +8,9 @@ Modifier les variables d’environnement du path en ajoutant une nouvelle variab
 Dans le cmd faire pip install ffmpeg-python
 
 Lancer photosequence.py avec la commande suivante (écrite dans le README ):  
-      python photosequence.py -i nom_de_la_video.mp4 -fi 4
+      python nomFichier.py -i nomVideo.mp4 -fi 4
 par exemple : python photosequence.py -i monsieur.mp4 -fi 4
+              python photosequence.py -i jaguar.mp4 -fi 6
 
 
 python photosequence.py -i monsieur.mp4 -fi 4
