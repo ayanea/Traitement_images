@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     FRAME_INTERVAL = args.frame_interval
     if args.video is not None:
-        tmp_folder = extract_frames_from_video(args.video)   #Extract frames from video with ffmpeg
+        tmp_folder = extract_frames_from_video(args.video,5)   #Extract frames from video with ffmpeg
         background = get_background_and_save(tmp_folder) #get background from frames and save
         get_mask_and_save(tmp_folder, background, FRAME_INTERVAL)   #get mask and save
         photosequence(FRAME_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory

@@ -65,7 +65,7 @@ def normalize(images):
     
     return nvimages
 
-def extract_frames_from_video(path_video):
+def extract_frames_from_video(path_video,framerate):
     print("----------------------  EXTRACTION DES FRAMES AVEC FFMPEG 1/4 ------------------------------------------")
 
     if not os.path.isfile(path_video):
@@ -91,7 +91,7 @@ def extract_frames_from_video(path_video):
                 os.remove(file_path)
 
     stream = ffmpeg.input(path_video)
-    stream = ffmpeg.filter(stream, 'fps', fps=15)
+    stream = ffmpeg.filter(stream, 'fps', fps=framerate)
     stream = ffmpeg.output(stream,  os.path.join(tmp_folder, 'image-%07d.png'), format="image2")
 
     ffmpeg.run(stream)

@@ -12,6 +12,12 @@ Lancer photosequence.py avec la commande suivante (écrite dans le README ):
 par exemple : python photosequence.py -i monsieur.mp4 -fi 4
               python photosequence.py -i jaguar.mp4 -fi 6
 
+              python photosequence_fading.py -i monsieur.mp4 -fi 4
+              python photosequence_fading.py -i jaguar.mp4 -fi 6
+
+              python photosequence_video.py -i monsieur.mp4 -fi 1 -vsi 15
+              python photosequence_video.py -i jaguar.mp4 -fi 1 -vsi 20
+
 
 python photosequence.py -i monsieur.mp4 -fi 4
 python photosequence.py --video <CHEMIN_VIDEO> --frame_interval <INTERVAL_FRAME>

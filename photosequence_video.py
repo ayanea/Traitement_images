@@ -20,9 +20,8 @@ def binary_merge(item,img_result):
             
             if mask_img[x,y] == (0,0,0):
                 img_result_pixels[x,y] = (r2,g2,b2)
-    del  _images
 
-def photosequence_video(frame_interval, background, tmp_folder, path_video):
+def photosequence_video(frame_interval,video_sequence_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
    
     print("----------------------  DEBUT DE LA SAUVEGARDE DE L'IMAGE FINALE 4/4 ------------------------------------------")
@@ -40,11 +39,10 @@ def photosequence_video(frame_interval, background, tmp_folder, path_video):
             fileName = ''.join(['img-seq-{:07d}'.format(cpt),'.png'])
             filePath = os.path.join(tmp_folder,fileName)
             img_result.save(filePath)
-            if cpt%15 == 0:
+            if cpt%video_sequence_interval == 0:
                  binary_merge(item, frozen_characters_img)
             printProgressBar(cpt, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
             cpt += 1
-            del img_result
 
     images_to_video(tmp_folder,'img-seq-%07d.png',''.join([basename,'-seq','.mp4']))   
     print("---------------------- VIDEO SAUVEGARDEE !  ------------------------------------------")
@@ -63,14 +61,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--video", type=str, help="Chemin du fichier vidéo")
     parser.add_argument("-fi", "--frame_interval", type=int, default=4, help="Interval des frames à prendre pour le mask")
+    parser.add_argument("-vsi", "--video_sequence_interval", type=int, default=15)
     args = parser.parse_args()
 
     FRAME_INTERVAL = args.frame_interval
+    VIDEO_SEQUENCE_INTERVAL = args.video_sequence_interval
     if args.video is not None:
-        tmp_folder = extract_frames_from_video(args.video)   #Extract frames from video with ffmpeg
+        tmp_folder = extract_frames_from_video(args.video,15)   #Extract frames from video with ffmpeg
         background = get_background_and_save(tmp_folder) #get background from frames and save
         get_mask_and_save(tmp_folder, background, FRAME_INTERVAL)   #get mask and save
-        photosequence_video(FRAME_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory
+        photosequence_video(FRAME_INTERVAL,VIDEO_SEQUENCE_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory
+        photosequence_video(FRAME_INTERVAL, VIDEO_SEQUENCE_INTERVAL,background, tmp_folder, args.video)
+
         
     else:
         print("Aucun fichier vidéo n'a été donnée en entrée")
