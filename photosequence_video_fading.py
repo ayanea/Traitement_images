@@ -38,7 +38,7 @@ def photosequence_video(frame_interval,video_sequence_interval, background, tmp_
     N = len(images)
     printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
     cpt = 0
-    ratio = 100//N
+    ratio = 100/N
     basename = os.path.splitext(os.path.basename(path_video))[0]
     frozen_characters_img = background.copy()
     print('******** IMAGE LEN ',len(images))

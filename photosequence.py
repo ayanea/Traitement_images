@@ -5,22 +5,20 @@ from lib.mask import get_mask_and_save
 import os
 import argparse
 
-def binary_merge(bkg_img, item,img_result):
-    _images = normalize([bkg_img,item[0],item[1],img_result])
-    bkg_pixels = _images[0].load()
-    img_pixels = _images[1].load()
-    mask_img = _images[2].load()
+def binary_merge(item,img_result):
+    _images = normalize(item[0],item[1],img_result])
+    img_pixels = _images[0].load()
+    mask_img = _images[1].load()
     width = _images[0].size[0]
     height = _images[0].size[1]
-    img_result_pixels = _images[3].load()
+    img_result_pixels = _images[2].load()
     
     for x in range(width):
         for y in range(height):
-            r1,g1,b1 = bkg_pixels[x,y]
-            r2,g2,b2 = img_pixels[x,y]
+            r,g,b = img_pixels[x,y]
             
             if mask_img[x,y] == (0,0,0):
-                img_result_pixels[x,y] = (r2,g2,b2)
+                img_result_pixels[x,y] = (r,g,b)
        
 def photosequence(frame_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
