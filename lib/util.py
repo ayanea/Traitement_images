@@ -20,8 +20,10 @@ def readImages_and_masks(nb, path_dir):
     tmp = os.listdir(path_dir)  
     cpt = 0
     for img_name in tmp:
-        if img_name.lower().find('_mask') != -1: continue
-        if img_name.lower().find('png') != -1 and cpt%nb == 0  : 
+        name = img_name.lower()
+        if name.find('-seq-') != -1: continue
+        if name.find('_mask') != -1: continue
+        if name.lower().find('png') != -1 and cpt%nb == 0  : 
             img =  Image.open(path_dir + '/' + img_name )
             fileParts = img_name.split('.')
             mask_file_name = path_dir + '/' + fileParts[0] + '_mask' + '.' +  fileParts[1] 
@@ -89,7 +91,7 @@ def extract_frames_from_video(path_video):
                 os.remove(file_path)
 
     stream = ffmpeg.input(path_video)
-    stream = ffmpeg.filter(stream, 'fps', fps=5)
+    stream = ffmpeg.filter(stream, 'fps', fps=15)
     stream = ffmpeg.output(stream,  os.path.join(tmp_folder, 'image-%07d.png'), format="image2")
 
     ffmpeg.run(stream)
