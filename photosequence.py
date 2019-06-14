@@ -6,7 +6,7 @@ import os
 import argparse
 
 def binary_merge(item,img_result):
-    _images = normalize(item[0],item[1],img_result])
+    _images = normalize([item[0],item[1],img_result])
     img_pixels = _images[0].load()
     mask_img = _images[1].load()
     width = _images[0].size[0]
@@ -29,7 +29,7 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
     cpt = 0
 
     for item in images:
-        binary_merge(background, item, img_result)
+        binary_merge(item, img_result)
         cpt += 1
         printProgressBar(cpt, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
@@ -38,6 +38,8 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
     print()
 
 if __name__ == "__main__":
+    # usage example : python photosequence.py -i monsieur.mp4 -fi 4
+                     #python photosequence.py -i jaguar.mp4 -fi 6
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--video", type=str, help="Chemin du fichier vidéo")
     parser.add_argument("-fi", "--frame_interval", type=int, default=4, help="Interval des frames à prendre pour le mask")

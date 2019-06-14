@@ -34,14 +34,13 @@ def binary_merge(item,img_result,transparency):
 def photosequence_video(frame_interval,video_sequence_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
    
-    print("----------------------  DEBUT DE LA SAUVEGARDE DE L'IMAGE FINALE 4/4 ------------------------------------------")
+    print("----------------------  DEBUT DE LA SAUVEGARDE DE LA VIDEO FINALE 4/4 ------------------------------------------")
     N = len(images)
     printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
     cpt = 0
     ratio = 100/N
     basename = os.path.splitext(os.path.basename(path_video))[0]
     frozen_characters_img = background.copy()
-    print('******** IMAGE LEN ',len(images))
     binary_merge(images[0], frozen_characters_img,-1)
     for i in range(0,N):
             print(cpt,'  ')
@@ -67,7 +66,8 @@ def images_to_video(directory,input_file_prefix, output_file_name):
 
 
 if __name__ == "__main__":
-   #exemple photosequence_video.py -i monsieur.mp4 -fi 1
+   #usage example : python photosequence_video_fading.py -i monsieur.mp4 -fi 1 -vsi 15
+                    #python photosequence_video_fading.py -i jaguar.mp4 -fi 1 -vsi 20
    if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--video", type=str, help="Chemin du fichier vidéo")
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         background = get_background_and_save(tmp_folder) #get background from frames and save
         get_mask_and_save(tmp_folder, background, FRAME_INTERVAL)   #get mask and save
         photosequence_video(FRAME_INTERVAL,VIDEO_SEQUENCE_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory
-        photosequence_video(FRAME_INTERVAL, VIDEO_SEQUENCE_INTERVAL,background, tmp_folder, args.video)
+        #photosequence_video(FRAME_INTERVAL, VIDEO_SEQUENCE_INTERVAL,background, tmp_folder, args.video)
 
         
     else:

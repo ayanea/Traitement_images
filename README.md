@@ -18,6 +18,14 @@ par exemple : python photosequence.py -i monsieur.mp4 -fi 4
               python photosequence_video.py -i monsieur.mp4 -fi 1 -vsi 15
               python photosequence_video.py -i jaguar.mp4 -fi 1 -vsi 20
 
+              python photosequence_video_fading.py -i monsieur.mp4 -fi 1 -vsi 15
+              python photosequence_video_fading.py -i jaguar.mp4 -fi 1 -vsi 20
+
 
 python photosequence.py -i monsieur.mp4 -fi 4
 python photosequence.py --video <CHEMIN_VIDEO> --frame_interval <INTERVAL_FRAME>
+
+Les fichiers photosequence.py, photosequence_fading.py, photosequence_video.py et photosequence_video_fading.py se trouvent dans le dossier courant.
+Les fichiers background.py, util.py et mask.py se trouvent dans le dossier lib
+Les images des sujets, de leurs masks et les résulats des videos de la photosequence (avec ou sans fading) se trouvent dans le dossier tmp. Il faut d'abord lancer les programmes pour les voir.
+Les images de la photosequence (avec ou sans fading) se trouvent dans le dossier courant

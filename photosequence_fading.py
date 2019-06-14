@@ -36,7 +36,7 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
     N = len(images)
     printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
     cpt = 0
-    ratio = 100//N
+    ratio = 100/N
     for i in range(0,N):
         binary_merge(images[i], img_result,ratio*i + 1)
         cpt += 1
@@ -47,6 +47,8 @@ def photosequence(frame_interval, background, tmp_folder, path_video):
     print()
 
 if __name__ == "__main__":
+    #usage example :  python photosequence_fading.py -i monsieur.mp4 -fi 4
+                     #python photosequence_fading.py -i jaguar.mp4 -fi 6
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--video", type=str, help="Chemin du fichier vidéo")
     parser.add_argument("-fi", "--frame_interval", type=int, default=4, help="Interval des frames à prendre pour le mask")
@@ -54,7 +56,7 @@ if __name__ == "__main__":
 
     FRAME_INTERVAL = args.frame_interval
     if args.video is not None:
-        tmp_folder = extract_frames_from_video(args.video)   #Extract frames from video with ffmpeg
+        tmp_folder = extract_frames_from_video(args.video,5)   #Extract frames from video with ffmpeg
         background = get_background_and_save(tmp_folder) #get background from frames and save
         get_mask_and_save(tmp_folder, background, FRAME_INTERVAL)   #get mask and save
         photosequence(FRAME_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory

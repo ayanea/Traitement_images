@@ -24,7 +24,7 @@ def binary_merge(item,img_result):
 def photosequence_video(frame_interval,video_sequence_interval, background, tmp_folder, path_video):
     images = readImages_and_masks(frame_interval, tmp_folder)
    
-    print("----------------------  DEBUT DE LA SAUVEGARDE DE L'IMAGE FINALE 4/4 ------------------------------------------")
+    print("----------------------  DEBUT DE LA SAUVEGARDE DE LA VIDEO FINALE 4/4 ------------------------------------------")
     N = len(images)
     printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
     cpt = 0
@@ -56,7 +56,8 @@ def images_to_video(directory,input_file_prefix, output_file_name):
 
 
 if __name__ == "__main__":
-   #exemple photosequence_video.py -i monsieur.mp4 -fi 1
+   #usage example : python photosequence_video.py -i monsieur.mp4 -fi 1 -vsi 15
+                   #python photosequence_video.py -i jaguar.mp4 -fi 1 -vsi 20
    if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--video", type=str, help="Chemin du fichier vidéo")
@@ -71,7 +72,7 @@ if __name__ == "__main__":
         background = get_background_and_save(tmp_folder) #get background from frames and save
         get_mask_and_save(tmp_folder, background, FRAME_INTERVAL)   #get mask and save
         photosequence_video(FRAME_INTERVAL,VIDEO_SEQUENCE_INTERVAL, background, tmp_folder, args.video)   #save photosequence in main directory
-        photosequence_video(FRAME_INTERVAL, VIDEO_SEQUENCE_INTERVAL,background, tmp_folder, args.video)
+       
 
         
     else:
@@ -79,5 +80,4 @@ if __name__ == "__main__":
         exit(1)
     
     
-    #images_to_video('C:/Users/DELL/Documents/E2/Traitement_images/tmp/Test','image-%07d.png','out.mp4')
-   
+  
